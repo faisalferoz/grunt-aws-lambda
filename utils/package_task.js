@@ -77,25 +77,15 @@ packageTask.getHandler = function (grunt) {
 
                 zipArchive.pipe(output);
 
+                var include_files = options.include_files.length ? options.include_files : ['./**'];
                 zipArchive.bulk([
                     {
-                        src: ['./**'],
+                        src: include_files,
                         dot: true,
                         expand: true,
                         cwd: install_location + '/node_modules/' + pkg.name
                     }
                 ]);
-
-                if (options.include_files.length) {
-                    zipArchive.bulk([
-                        {
-                            src: options.include_files,
-                            dot: true,
-                            expand: true,
-                            cwd: options.package_folder
-                        }
-                    ]);
-                }
 
                 zipArchive.finalize();
 
